@@ -1,12 +1,54 @@
+import { Model, DataTypes, Optional } from 'sequelize'
 import sequelize from '../db'
-import { DataTypes } from 'sequelize'
 
-const User = sequelize.define('user', {
-	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-	email: { type: DataTypes.STRING, unique: true },
-	password: { type: DataTypes.STRING },
-	role: { type: DataTypes.STRING, defaultValue: 'USER' },
-})
+interface UserAttributes {
+	id: number
+	email: string
+	password: string
+	role: string
+}
+
+interface UserCreationAttributes extends Optional<
+	UserAttributes,
+	'id' | 'role'
+> {}
+
+class User
+	extends Model<UserAttributes, UserCreationAttributes>
+	implements UserAttributes
+{
+	public id!: number
+	public email!: string
+	public password!: string
+	public role!: string
+}
+
+User.init(
+	{
+		id: {
+			type: DataTypes.INTEGER,
+			primaryKey: true,
+			autoIncrement: true,
+		},
+		email: {
+			type: DataTypes.STRING,
+			unique: true,
+		},
+		password: {
+			type: DataTypes.STRING,
+		},
+		role: {
+			type: DataTypes.STRING,
+			defaultValue: 'USER',
+		},
+	},
+	{
+		sequelize,
+		tableName: 'users',
+	},
+)
+
+export default User
 const Event = sequelize.define('event', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 	title: { type: DataTypes.STRING, allowNull: false },
