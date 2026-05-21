@@ -4,6 +4,6 @@ import mainController from '../controllers'
 const router = express()
 
 router.post('/login', mainController.login)
-router.get('/auth')
+router.get('/check', mainController.check)
 
 export default router

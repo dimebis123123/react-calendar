@@ -1,10 +1,30 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import AppRouter from './components/AppRouter'
 import NavBar from './components/NavBar'
-import { Layout } from 'antd'
+import { Layout, Spin } from 'antd'
 import './App.css'
+import { check } from './http/api'
+import { useAppDispatch } from './hooks'
+import { setAuth, setEmail } from './store/slices/userSlice'
 
 const App: FC = () => {
+	const dispatch = useAppDispatch()
+	const [loading, setLoading] = useState(true)
+	useEffect(() => {
+		setTimeout(() => {
+			check()
+				.then(data => {
+					if (data) {
+						dispatch(setAuth(true))
+						dispatch(setEmail(data.email))
+					}
+				})
+				.finally(() => setLoading(false))
+		}, 1000)
+	}, [])
+	if (loading) {
+		return <Spin size='large'></Spin>
+	}
 	return (
 		<Layout>
 			<NavBar></NavBar>

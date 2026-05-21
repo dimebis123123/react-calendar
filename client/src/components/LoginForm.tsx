@@ -1,23 +1,48 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd'
-
-type FieldType = {
-	username?: string
-	password?: string
-	remember?: string
-}
+import { login } from '../http/api'
+import { setEmail, setAuth, setError } from '../store/slices/userSlice'
+import { useAppDispatch } from '../hooks'
 
 const LoginForm: FC = () => {
+	type FieldType = {
+		email?: string
+		password?: string
+		remember?: string
+	}
+
+	const [emailValue, setEmailValue] = useState('')
+	const [password, setPassword] = useState('')
+	const [errorMessage, setErrorMessage] = useState('')
+	const dispatch = useAppDispatch()
+	const submit = async () => {
+		let userdata
+		userdata = await login(emailValue, password)
+		if (typeof userdata === 'object' && 'email' in userdata) {
+			dispatch(setEmail(userdata.email))
+			dispatch(setAuth(true))
+		} else {
+			dispatch(setError(true))
+			console.log(userdata.message)
+			setErrorMessage(userdata.message)
+		}
+	}
+
 	return (
-		<Form>
+		<Form onFinish={submit}>
 			<Form.Item<FieldType>
-				label='Имя Исследователя'
-				name='username'
+				label='Почта Исследователя'
+				name='email'
 				rules={[
 					{ required: true, message: 'Пожалуйста введи свою почту путник!' },
 				]}
 			>
-				<Input />
+				<Input
+					value={emailValue}
+					onChange={e => {
+						setEmailValue(e.target.value)
+					}}
+				/>
 			</Form.Item>
 
 			<Form.Item<FieldType>
@@ -25,8 +50,14 @@ const LoginForm: FC = () => {
 				name='password'
 				rules={[{ required: true, message: 'Какое твоё секретное слово!' }]}
 			>
-				<Input.Password />
+				<Input.Password
+					value={password}
+					onChange={e => {
+						setPassword(e.target.value)
+					}}
+				/>
 			</Form.Item>
+			{errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
 
 			<Form.Item<FieldType>
 				name='remember'

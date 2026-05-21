@@ -1,3 +1,13 @@
 .h100 {
 	height: calc(100vh - 64px);
 }
+.ant-spin {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100%;
+}
+.ant-spin .ant-spin-dot {
+	font-size: 100px;
+}
