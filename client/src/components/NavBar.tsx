@@ -18,7 +18,12 @@ const NavBar: FC = () => {
 			<Row justify='end'>
 				{isAuth ? (
 					<>
-						<Menu theme='dark' mode='horizontal' selectable={false}>
+						<Menu
+							style={{ width: '100%', justifyContent: 'flex-end' }}
+							theme='dark'
+							mode='horizontal'
+							selectable={false}
+						>
 							<Menu.Item key={2}>{email}</Menu.Item>
 							<Menu.Item
 								onClick={() => {
