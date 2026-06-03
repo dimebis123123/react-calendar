@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'antd'
+import EventForm from './EventForm'
 
 // Modal.tsx
 interface ModalProps {
@@ -13,14 +14,13 @@ const ModalWindow = ({ isOpen, onClose }: ModalProps) => {
 	return (
 		<>
 			<Modal
-				title='Basic Modal'
+				title='Добавить экспедицию'
 				closable={{ 'aria-label': 'Custom Close Button' }}
 				open={isOpen}
 				onCancel={onClose}
+				footer={null}
 			>
-				<p>Some contents...</p>
-				<p>Some contents...</p>
-				<p>Some contents...</p>
+				<EventForm></EventForm>
 			</Modal>
 		</>
 	)
