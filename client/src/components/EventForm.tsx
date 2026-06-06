@@ -2,11 +2,18 @@ import React, { FC, useState } from 'react'
 import { Button, Checkbox, DatePicker, Form, Input, Select } from 'antd'
 import { login } from '../http/api'
 import { setEmail, setAuth, setError } from '../store/slices/userSlice'
-import { useAppDispatch } from '../hooks'
+import { useAppDispatch, useAppSelector } from '../hooks'
+import { useSelector } from 'react-redux'
 const EventForm = () => {
 	type FieldType = {
 		description?: string
 	}
+	const guests = useAppSelector(state => state.event.guests)
+	const options = guests.map(option => ({
+		value: option.email,
+		label: option.email,
+	}))
+
 	return (
 		<Form>
 			<Form.Item<FieldType>
@@ -32,23 +39,18 @@ const EventForm = () => {
 			</Form.Item>
 			<Form.Item
 				label='Выберите участников'
-				name='date'
+				name='string'
 				rules={[
 					{
 						required: true,
-						message: 'Пожалуйста введи дату экспедиции, это важно!',
+						message: 'Пожалуйста введи участников, это важно!',
 					},
 				]}
 			>
 				<Select
-					defaultValue='lucy'
+					defaultValue={options[0].value}
 					style={{ width: 120 }}
-					options={[
-						{ value: 'jack', label: 'Jack' },
-						{ value: 'lucy', label: 'Lucy' },
-						{ value: 'Yiminghe', label: 'yiminghe' },
-						{ value: 'disabled', label: 'Disabled', disabled: true },
-					]}
+					options={options}
 				/>
 			</Form.Item>
 			<Form.Item label={null}>

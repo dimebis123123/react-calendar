@@ -65,5 +65,13 @@ class MainController {
 			return next(new ApiError(401, 'Не авторизован'))
 		}
 	}
+	async getGuests(req: Request, res: Response, next: NextFunction) {
+		try {
+			const guests = await User.findAll()
+			return res.json(guests)
+		} catch (error) {
+			return next(new ApiError(401, 'Не авторизован'))
+		}
+	}
 }
 export default new MainController()

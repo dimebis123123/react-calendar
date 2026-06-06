@@ -3,9 +3,10 @@ import AppRouter from './components/AppRouter'
 import NavBar from './components/NavBar'
 import { Layout, Spin } from 'antd'
 import './App.css'
-import { check } from './http/api'
+import { check, getGuests } from './http/api'
 import { useAppDispatch } from './hooks'
 import { setAuth, setEmail } from './store/slices/userSlice'
+import { setGuest } from './store/slices/eventSlice'
 
 const App: FC = () => {
 	const dispatch = useAppDispatch()
@@ -20,6 +21,10 @@ const App: FC = () => {
 					}
 				})
 				.finally(() => setLoading(false))
+
+			getGuests().then(data => {
+				dispatch(setGuest(data))
+			})
 		}, 1000)
 	}, [])
 	if (loading) {

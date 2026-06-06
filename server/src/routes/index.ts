@@ -5,5 +5,6 @@ const router = express()
 
 router.post('/login', mainController.login)
 router.get('/check', mainController.check)
+router.get('/getGuests', mainController.getGuests)
 
 export default router

@@ -52,6 +52,7 @@ interface EventAttributes {
 	id: number
 	title: string
 	description: string
+	date: string
 }
 
 interface EventCreationAttributes extends Optional<EventAttributes, 'id'> {}
@@ -63,6 +64,7 @@ class Event
 	declare id: number
 	declare title: string
 	declare description: string
+	declare date: string
 }
 
 Event.init(
@@ -77,6 +79,10 @@ Event.init(
 			allowNull: false,
 		},
 		description: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		date: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
@@ -131,15 +137,26 @@ EventParticipants.init(
 	},
 )
 
-User.hasMany(Event, { foreignKey: 'creatorId' })
-Event.belongsTo(User, { foreignKey: 'creatorId' })
+User.hasMany(Event, {
+	foreignKey: 'creatorId',
+	as: 'createdEvents',
+})
+
+Event.belongsTo(User, {
+	foreignKey: 'creatorId',
+	as: 'creator',
+})
+
 User.belongsToMany(Event, {
 	through: EventParticipants,
 	foreignKey: 'userId',
+	as: 'participatedEvents',
 })
+
 Event.belongsToMany(User, {
 	through: EventParticipants,
 	foreignKey: 'eventId',
+	as: 'participants',
 })
 
 export { User, Event, EventParticipants }

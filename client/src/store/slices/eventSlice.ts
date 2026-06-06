@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface EventState {
 	author: string
-	guest: string
+	guests: any[]
 	date: string
 	description: string
 	title: string
@@ -10,7 +10,7 @@ export interface EventState {
 
 const initialState: EventState = {
 	author: '',
-	guest: '',
+	guests: [],
 	date: '',
 	description: '',
 	title: '',
@@ -23,8 +23,8 @@ const eventSlice = createSlice({
 		setAuthor: (state, action: PayloadAction<string>) => {
 			state.author = action.payload
 		},
-		setGuest: (state, action: PayloadAction<string>) => {
-			state.guest = action.payload
+		setGuest: (state, action: PayloadAction<any[]>) => {
+			state.guests = action.payload
 		},
 		setDate: (state, action: PayloadAction<string>) => {
 			state.date = action.payload

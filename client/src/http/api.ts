@@ -35,3 +35,13 @@ export const check = async () => {
 		return null
 	}
 }
+export const getGuests = async () => {
+	try {
+		const { data } = await $authHost.get('api/getGuests')
+		return data
+	} catch (error: any) {
+		console.log('Ошибка авторизации', error.response?.status)
+
+		return null
+	}
+}
