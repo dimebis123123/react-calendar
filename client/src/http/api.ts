@@ -1,5 +1,6 @@
 import { jwtDecode } from 'jwt-decode'
 import { $host, $authHost } from '.'
+import { EventState } from '../store/slices/eventSlice'
 
 interface TokenPayload {
 	id: number
@@ -20,7 +21,13 @@ export const login = async (email: string, password: string) => {
 		return new Error('Неверный email или пароль')
 	}
 }
-
+export const createMyEvent = async (event: EventState) => {
+	try {
+		const { data } = await $authHost.post('api/login', event)
+	} catch (error) {
+		return new Error('Неверный email или пароль')
+	}
+}
 export const check = async () => {
 	try {
 		const { data } = await $authHost.get('api/check')
@@ -38,6 +45,7 @@ export const check = async () => {
 export const getGuests = async () => {
 	try {
 		const { data } = await $authHost.get('api/getGuests')
+
 		return data
 	} catch (error: any) {
 		console.log('Ошибка авторизации', error.response?.status)

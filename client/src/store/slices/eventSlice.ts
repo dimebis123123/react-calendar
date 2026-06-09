@@ -23,7 +23,7 @@ const eventSlice = createSlice({
 		setAuthor: (state, action: PayloadAction<string>) => {
 			state.author = action.payload
 		},
-		setGuest: (state, action: PayloadAction<any[]>) => {
+		setGuests: (state, action: PayloadAction<any[]>) => {
 			state.guests = action.payload
 		},
 		setDate: (state, action: PayloadAction<string>) => {
@@ -38,6 +38,6 @@ const eventSlice = createSlice({
 	},
 })
 
-export const { setAuthor, setGuest, setDate, setDescription, setTitle } =
+export const { setAuthor, setGuests, setDate, setDescription, setTitle } =
 	eventSlice.actions
 export default eventSlice.reducer

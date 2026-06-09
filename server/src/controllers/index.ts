@@ -12,6 +12,13 @@ interface RegistrationBody {
 	password: string
 	role: string
 }
+interface EventState {
+	author: string
+	guests: any[]
+	date: string
+	description: string
+	title: string
+}
 
 type TypedRequestBody<T> = Request<{}, {}, T>
 
@@ -49,6 +56,37 @@ class MainController {
 			const user = await User.create({ email, role, password: hashPassword })
 			const token = generateJwt(user.id, user.email, user.role)
 			return res.json({ token })
+		}
+	}
+	async createMyEvent(
+		req: TypedRequestBody<EventState>,
+		res: Response,
+		next: NextFunction,
+	) {
+		const tokenLocal = req.headers.authorization?.split(' ')[1]
+		if (!tokenLocal) {
+			return next(new ApiError(401, 'Не авторизован'))
+		}
+		const { author, guests, date, description, title } = req.body
+
+		const creator = await User.findOne({
+			where: { email: author },
+		})
+		const invitedGuests = await User.findAll({
+			where: { email: guests },
+		})
+
+		if (creator && invitedGuests) {
+			const event = await creator.createCreatedEvent({
+				date: date,
+				title: title,
+				description: description,
+			})
+			await event.addParticipants(invitedGuests)
+		} else {
+			return next(
+				new ApiError(401, 'Нету создателя ивента или никто не приглашен'),
+			)
 		}
 	}
 	async check(req: Request, res: Response, next: NextFunction) {

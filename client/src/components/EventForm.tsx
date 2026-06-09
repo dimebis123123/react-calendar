@@ -1,17 +1,19 @@
 import React, { FC, useState } from 'react'
 import { Button, Checkbox, DatePicker, Form, Input, Select } from 'antd'
-import { login } from '../http/api'
+import { createMyEvent, login } from '../http/api'
 import { setEmail, setAuth, setError } from '../store/slices/userSlice'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { useSelector } from 'react-redux'
 import { EventState } from '../store/slices/eventSlice'
 import { Moment } from 'moment'
 import { Dayjs } from 'dayjs'
+
 const EventForm = () => {
 	type FieldType = {
 		description?: string
 		title?: string
 	}
+	const user = useAppSelector(state => state.user.email)
 	const guests = useAppSelector(state => state.event.guests)
 	const options = guests.map(option => ({
 		value: option.email,
@@ -19,18 +21,22 @@ const EventForm = () => {
 	}))
 
 	const [event, setEvent] = useState<EventState>({
-		author: '',
+		author: user,
 		guests: [],
 		date: '',
 		description: '',
 		title: '',
 	})
+
+	const submitForm = () => {
+		createMyEvent(event)
+	}
 	function selectChange(guests: string[]) {
 		setEvent({ ...event, guests: guests })
 	}
 
 	return (
-		<Form>
+		<Form onFinish={submitForm}>
 			<Form.Item<FieldType>
 				label='Название экспедиции'
 				name='title'
@@ -88,11 +94,7 @@ const EventForm = () => {
 				/>
 			</Form.Item>
 			<Form.Item label={null}>
-				<Button
-					type='primary'
-					htmlType='submit'
-					onClick={() => console.log(event)}
-				>
+				<Button type='primary' htmlType='submit'>
 					Создать
 				</Button>
 			</Form.Item>

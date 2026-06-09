@@ -1,5 +1,19 @@
 import { Model, DataTypes, Optional } from 'sequelize'
 import sequelize from '../db'
+import {
+	HasManyCreateAssociationMixin,
+	HasManyGetAssociationsMixin,
+	BelongsToManyAddAssociationMixin,
+	BelongsToManyGetAssociationsMixin,
+} from 'sequelize'
+import {
+	BelongsToManyAddAssociationsMixin,
+	BelongsToManyRemoveAssociationMixin,
+	BelongsToManyRemoveAssociationsMixin,
+	BelongsToManySetAssociationsMixin,
+	BelongsToManyHasAssociationMixin,
+	BelongsToManyCountAssociationsMixin,
+} from 'sequelize'
 
 interface UserAttributes {
 	id: number
@@ -21,6 +35,10 @@ class User
 	declare email: string
 	declare password: string
 	declare role: string
+	declare getCreatedEvents: HasManyGetAssociationsMixin<Event>
+	declare createCreatedEvent: HasManyCreateAssociationMixin<Event>
+
+	declare getParticipatedEvents: BelongsToManyGetAssociationsMixin<Event>
 }
 
 User.init(
@@ -65,6 +83,20 @@ class Event
 	declare title: string
 	declare description: string
 	declare date: string
+
+	declare getParticipants: BelongsToManyGetAssociationsMixin<User>
+	declare addParticipant: BelongsToManyAddAssociationMixin<User, number>
+
+	declare addParticipants: BelongsToManyAddAssociationsMixin<User, number>
+
+	declare removeParticipant: BelongsToManyRemoveAssociationMixin<User, number>
+	declare removeParticipants: BelongsToManyRemoveAssociationsMixin<User, number>
+
+	declare setParticipants: BelongsToManySetAssociationsMixin<User, number>
+
+	declare hasParticipant: BelongsToManyHasAssociationMixin<User, number>
+
+	declare countParticipants: BelongsToManyCountAssociationsMixin
 }
 
 Event.init(

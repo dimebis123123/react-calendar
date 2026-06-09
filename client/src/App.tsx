@@ -6,7 +6,7 @@ import './App.css'
 import { check, getGuests } from './http/api'
 import { useAppDispatch } from './hooks'
 import { setAuth, setEmail } from './store/slices/userSlice'
-import { setGuest } from './store/slices/eventSlice'
+import { setGuests } from './store/slices/eventSlice'
 
 const App: FC = () => {
 	const dispatch = useAppDispatch()
@@ -23,7 +23,7 @@ const App: FC = () => {
 				.finally(() => setLoading(false))
 
 			getGuests().then(data => {
-				dispatch(setGuest(data))
+				dispatch(setGuests(data))
 			})
 		}, 1000)
 	}, [])
