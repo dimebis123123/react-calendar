@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import ApiError from '../error/ApiError'
 import { User } from '../models'
 import { Model } from 'sequelize'
+import sequelize from '../db'
 
 const jwt = require('jsonwebtoken')
 
@@ -63,30 +64,42 @@ class MainController {
 		res: Response,
 		next: NextFunction,
 	) {
-		const tokenLocal = req.headers.authorization?.split(' ')[1]
-		if (!tokenLocal) {
-			return next(new ApiError(401, 'Не авторизован'))
-		}
-		const { author, guests, date, description, title } = req.body
+		try {
+			const { guests, date, description, title } = req.body
 
-		const creator = await User.findOne({
-			where: { email: author },
-		})
-		const invitedGuests = await User.findAll({
-			where: { email: guests },
-		})
+			if (!req.user) {
+				return res.status(401).json({ message: 'Не авторизован' })
+			}
 
-		if (creator && invitedGuests) {
-			const event = await creator.createCreatedEvent({
-				date: date,
-				title: title,
-				description: description,
+			const creator = await User.findOne({
+				where: { email: req.user.email },
 			})
-			await event.addParticipants(invitedGuests)
-		} else {
-			return next(
-				new ApiError(401, 'Нету создателя ивента или никто не приглашен'),
-			)
+
+			if (!creator) {
+				return res.status(404).json({ message: 'Создатель не найден' })
+			}
+
+			const invitedGuests = await User.findAll({
+				where: { email: guests },
+			})
+
+			if (!invitedGuests.length) {
+				return res.status(400).json({ message: 'Гости не найдены' })
+			}
+
+			await sequelize.transaction(async t => {
+				const event = await creator.createCreatedEvent(
+					{ date, title, description },
+					{ transaction: t },
+				)
+
+				await event.addParticipants(invitedGuests, { transaction: t })
+			})
+
+			return res.status(201).json({ message: 'Успешно' })
+		} catch (e: any) {
+			console.error(e)
+			return res.status(500).json({ message: e.message })
 		}
 	}
 	async check(req: Request, res: Response, next: NextFunction) {

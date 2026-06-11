@@ -8,7 +8,11 @@ import { EventState } from '../store/slices/eventSlice'
 import { Moment } from 'moment'
 import { Dayjs } from 'dayjs'
 
-const EventForm = () => {
+interface EventProps {
+	onCancel: () => void
+}
+
+const EventForm = ({ onCancel }: EventProps) => {
 	type FieldType = {
 		description?: string
 		title?: string
@@ -28,8 +32,10 @@ const EventForm = () => {
 		title: '',
 	})
 
-	const submitForm = () => {
-		createMyEvent(event)
+	const submitForm = async () => {
+		const response = await createMyEvent(event)
+		onCancel()
+		alert(response)
 	}
 	function selectChange(guests: string[]) {
 		setEvent({ ...event, guests: guests })

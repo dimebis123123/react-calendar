@@ -20,7 +20,7 @@ const ModalWindow = ({ isOpen, onClose }: ModalProps) => {
 				onCancel={onClose}
 				footer={null}
 			>
-				<EventForm></EventForm>
+				<EventForm onCancel={onClose}></EventForm>
 			</Modal>
 		</>
 	)

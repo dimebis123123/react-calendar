@@ -23,9 +23,12 @@ export const login = async (email: string, password: string) => {
 }
 export const createMyEvent = async (event: EventState) => {
 	try {
-		const { data } = await $authHost.post('api/login', event)
-	} catch (error) {
-		return new Error('Неверный email или пароль')
+		const { data } = await $authHost.post('api/createMyEvent', event)
+		return 'Экспедиция успешно назначена!'
+	} catch (error: any) {
+		const message = error.response?.data?.message || 'Неизвестная ошибка'
+
+		alert(message)
 	}
 }
 export const check = async () => {
