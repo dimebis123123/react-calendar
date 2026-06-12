@@ -8,5 +8,5 @@ router.post('/login', mainController.login)
 router.post('/createMyEvent', authMiddleware, mainController.createMyEvent)
 router.get('/check', mainController.check)
 router.get('/getGuests', mainController.getGuests)
-
+router.get('/getEvents', mainController.getEvents)
 export default router

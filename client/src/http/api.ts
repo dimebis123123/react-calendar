@@ -17,8 +17,12 @@ export const login = async (email: string, password: string) => {
 		})
 		localStorage.setItem('token', data.token)
 		return jwtDecode<TokenPayload>(data.token)
-	} catch (error) {
-		return new Error('Неверный email или пароль')
+	} catch (error: any) {
+		const message = error.response?.data?.message || 'Неизвестная ошибка'
+
+		alert(message)
+
+		return message
 	}
 }
 export const createMyEvent = async (event: EventState) => {
@@ -48,6 +52,18 @@ export const check = async () => {
 export const getGuests = async () => {
 	try {
 		const { data } = await $authHost.get('api/getGuests')
+
+		return data
+	} catch (error: any) {
+		console.log('Ошибка авторизации', error.response?.status)
+
+		return null
+	}
+}
+export const getEvents = async () => {
+	try {
+		const { data } = await $authHost.get('api/getEvents')
+		console.log(data)
 
 		return data
 	} catch (error: any) {

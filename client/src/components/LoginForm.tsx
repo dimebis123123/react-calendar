@@ -23,8 +23,8 @@ const LoginForm: FC = () => {
 			dispatch(setAuth(true))
 		} else {
 			dispatch(setError(true))
-			console.log(userdata.message)
-			setErrorMessage(userdata.message)
+			console.log(userdata)
+			setErrorMessage(userdata)
 		}
 	}
 

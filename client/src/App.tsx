@@ -3,30 +3,35 @@ import AppRouter from './components/AppRouter'
 import NavBar from './components/NavBar'
 import { Layout, Spin } from 'antd'
 import './App.css'
-import { check, getGuests } from './http/api'
-import { useAppDispatch } from './hooks'
+import { check, getEvents, getGuests } from './http/api'
+import { useAppDispatch, useAppSelector } from './hooks'
 import { setAuth, setEmail } from './store/slices/userSlice'
-import { setGuests } from './store/slices/eventSlice'
+import { setEvents, setGuests } from './store/slices/eventSlice'
 
 const App: FC = () => {
 	const dispatch = useAppDispatch()
 	const [loading, setLoading] = useState(true)
+	const user = useAppSelector(state => state.user.email)
 	useEffect(() => {
 		setTimeout(() => {
-			check()
-				.then(data => {
-					if (data) {
-						dispatch(setAuth(true))
-						dispatch(setEmail(data.email))
-					}
+			if (user == '') {
+				check()
+					.then(data => {
+						if (data) {
+							dispatch(setAuth(true))
+							dispatch(setEmail(data.email))
+						}
+					})
+					.finally(() => setLoading(false))
+			}
+			if (user !== '') {
+				getGuests().then(data => {
+					dispatch(setGuests(data))
 				})
-				.finally(() => setLoading(false))
-
-			getGuests().then(data => {
-				dispatch(setGuests(data))
-			})
+				getEvents().then(data => dispatch(setEvents(data)))
+			}
 		}, 1000)
-	}, [])
+	}, [user])
 	if (loading) {
 		return <Spin size='large'></Spin>
 	}

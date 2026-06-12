@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import bcrypt from 'bcrypt'
 
 import ApiError from '../error/ApiError'
-import { User } from '../models'
+import { Event, User } from '../models'
 import { Model } from 'sequelize'
 import sequelize from '../db'
 
@@ -112,16 +112,34 @@ class MainController {
 
 			const token = generateJwt(decoded.id, decoded.email, decoded.role)
 			return res.json({ token })
-		} catch (error) {
-			return next(new ApiError(401, 'Не авторизован'))
+		} catch (e: any) {
+			res.status(500).json({ message: e.message })
 		}
 	}
 	async getGuests(req: Request, res: Response, next: NextFunction) {
 		try {
 			const guests = await User.findAll()
 			return res.json(guests)
-		} catch (error) {
-			return next(new ApiError(401, 'Не авторизован'))
+		} catch (e: any) {
+			res.status(500).json({ message: e.message })
+		}
+	}
+	async getEvents(req: Request, res: Response, next: NextFunction) {
+		try {
+			const events = await Event.findAll({
+				include: [
+					{
+						model: User,
+						as: 'participants',
+						attributes: ['id', 'email'],
+					},
+					{ model: User, as: 'creator', attributes: ['id', 'email'] },
+				],
+			})
+
+			return res.json(events)
+		} catch (e: any) {
+			res.status(500).json({ message: e.message })
 		}
 	}
 }

@@ -6,6 +6,7 @@ export interface EventState {
 	date: string
 	description: string
 	title: string
+	events: any[]
 }
 
 const initialState: EventState = {
@@ -14,6 +15,7 @@ const initialState: EventState = {
 	date: '',
 	description: '',
 	title: '',
+	events: [],
 }
 
 const eventSlice = createSlice({
@@ -35,9 +37,18 @@ const eventSlice = createSlice({
 		setTitle: (state, action: PayloadAction<string>) => {
 			state.title = action.payload
 		},
+		setEvents: (state, action: PayloadAction<any[]>) => {
+			state.events = action.payload
+		},
 	},
 })
 
-export const { setAuthor, setGuests, setDate, setDescription, setTitle } =
-	eventSlice.actions
+export const {
+	setAuthor,
+	setGuests,
+	setDate,
+	setDescription,
+	setTitle,
+	setEvents,
+} = eventSlice.actions
 export default eventSlice.reducer

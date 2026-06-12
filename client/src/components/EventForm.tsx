@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react'
 import { Button, Checkbox, DatePicker, Form, Input, Select } from 'antd'
-import { createMyEvent, login } from '../http/api'
+import { createMyEvent, getEvents, login } from '../http/api'
 import { setEmail, setAuth, setError } from '../store/slices/userSlice'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { useSelector } from 'react-redux'
-import { EventState } from '../store/slices/eventSlice'
+import { EventState, setEvents } from '../store/slices/eventSlice'
 import { Moment } from 'moment'
 import { Dayjs } from 'dayjs'
 
@@ -12,12 +12,14 @@ interface EventProps {
 	onCancel: () => void
 }
 
-const EventForm = ({ onCancel }: EventProps) => {
+const EventForm: FC<EventProps> = ({ onCancel }) => {
 	type FieldType = {
 		description?: string
 		title?: string
 	}
+	const dispatch = useAppDispatch()
 	const user = useAppSelector(state => state.user.email)
+	const events = useAppSelector(state => state.event.events)
 	const guests = useAppSelector(state => state.event.guests)
 	const options = guests.map(option => ({
 		value: option.email,
@@ -30,11 +32,13 @@ const EventForm = ({ onCancel }: EventProps) => {
 		date: '',
 		description: '',
 		title: '',
+		events: events,
 	})
 
 	const submitForm = async () => {
 		const response = await createMyEvent(event)
 		onCancel()
+		getEvents().then(data => dispatch(setEvents(data)))
 		alert(response)
 	}
 	function selectChange(guests: string[]) {
