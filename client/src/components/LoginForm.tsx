@@ -34,7 +34,10 @@ const LoginForm: FC = () => {
 				label='Почта Исследователя'
 				name='email'
 				rules={[
-					{ required: true, message: 'Пожалуйста введи свою почту путник!' },
+					{
+						required: true,
+						message: 'Пожалуйста введи свою почту путник!!!!!',
+					},
 				]}
 			>
 				<Input
