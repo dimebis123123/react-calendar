@@ -11,3 +11,577 @@
 .ant-spin .ant-spin-dot {
 	font-size: 100px;
 }
+/* ========== MADE IN ABYSS – RUSTY BROWN / PARCHMENT THEME ========== */
+/* Бурые тона, старая бумага, ржавчина, дерево, реликвии */
+/* Календарь: ячейки растягиваются по содержимому, нет наслоений */
+
+/* ===== ГЛОБАЛЬНЫЕ ===== */
+body,
+#root,
+.ant-layout {
+	background: #2a2418 radial-gradient(ellipse at 30% 20%, #3d3322, #1f1b12);
+	font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+}
+.ant-picker-body {
+	padding: 0 !important;
+}
+
+.ant-layout-content {
+	background: rgba(30, 26, 18, 0.5);
+	padding: 20px;
+	min-height: 100vh;
+}
+
+/* ===== ХЕДЕР ===== */
+.ant-layout-header {
+	background: #261f15 !important;
+	border-bottom: 2px solid #6b4c2c;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+	padding: 0 24px;
+}
+
+.ant-menu-dark.ant-menu-horizontal {
+	background: transparent;
+}
+
+.ant-menu-dark .ant-menu-item {
+	color: #c8b28a !important;
+	text-shadow: 0 0 2px #3a2a18;
+	font-weight: 500;
+}
+
+.ant-menu-dark .ant-menu-item:hover {
+	color: #eeddbb !important;
+	background: #3d2e1e !important;
+	border-radius: 8px;
+}
+
+/* ===== КАЛЕНДАРЬ – РАСТЯГИВАЮЩИЕСЯ ЯЧЕЙКИ ===== */
+.ant-picker-calendar-full {
+	background: #2a241add;
+	backdrop-filter: blur(0px);
+	border-radius: 20px;
+	border: 1px solid #6b5438;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+	overflow-x: auto;
+	overflow-y: visible;
+}
+
+.ant-picker-calendar-header {
+	background: #2b231cee;
+	border-bottom: 1px solid #5e4630;
+	padding: 14px 20px;
+}
+
+/* Селекторы */
+.ant-select-outlined .ant-select-selector {
+	background: #31271e !important;
+	border-color: #7a5a3e !important;
+	color: #e6d0aa;
+	border-radius: 12px;
+}
+
+.ant-select-arrow {
+	color: #b8946a;
+}
+
+/* Переключатель Month/Year */
+.ant-radio-group {
+	background: #282018;
+	border-radius: 12px;
+}
+
+.ant-radio-button-wrapper {
+	background: #2c221a;
+	border-color: #6e5236;
+	color: #dccaa4;
+}
+
+.ant-radio-button-wrapper-checked {
+	background: #7a5a3a !important;
+	border-color: #b8905a !important;
+	color: #fff0d0 !important;
+	box-shadow: 0 0 6px #c8a060;
+}
+
+/* Таблица */
+.ant-picker-content {
+	table-layout: fixed;
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+.ant-picker-content th {
+	color: #b89a6a !important;
+	font-size: 13px;
+	font-weight: 500 !important;
+	background: #231d15;
+	padding: 12px 4px !important;
+	border-bottom: 1px solid #5a4230;
+}
+
+/* ===== ОСНОВНОЕ: РАСТЯГИВАЮЩИЕСЯ ЯЧЕЙКИ ===== */
+.ant-picker-cell {
+	background: #201b14;
+	vertical-align: top;
+	height: auto !important;
+	min-height: auto !important;
+	max-height: none !important;
+	position: relative;
+	z-index: 1;
+}
+
+.ant-picker-cell-in-view {
+	background: #251f18;
+}
+
+.ant-picker-cell-inner {
+	border-radius: 12px;
+	margin: 4px;
+	transition: all 0.15s;
+	border: 1px solid transparent;
+	height: auto !important;
+	min-height: 110px !important;
+	max-height: none !important;
+	display: flex !important;
+	flex-direction: column;
+	overflow: visible !important;
+	position: relative;
+	z-index: 2;
+}
+
+/* Сегодняшний день */
+.ant-picker-calendar-date-today {
+	background: #4a3824 !important;
+	border: 1px solid #d8a85a !important;
+	border-radius: 12px;
+	box-shadow: 0 0 10px #b87a3a;
+}
+
+/* Выбранный день */
+.ant-picker-cell-selected .ant-picker-cell-inner {
+	background: #4a3624cc !important;
+	border: 1px solid #c8a060;
+	box-shadow: inset 0 0 0 1px rgba(220, 180, 120, 0.2);
+}
+
+/* Дата (число) */
+.ant-picker-calendar-date {
+	height: auto !important;
+	display: flex !important;
+	flex-direction: column;
+	flex: 1;
+}
+
+.ant-picker-calendar-date-value {
+	font-size: 16px;
+	font-weight: bold;
+	color: #e6d0aa;
+	padding: 6px 8px 4px;
+	border-bottom: 1px solid #5a4230;
+	margin-bottom: 6px;
+	display: inline-block;
+	width: auto;
+	align-self: flex-start;
+	flex-shrink: 0;
+}
+
+/* ===== КОНТЕНТ В ЯЧЕЙКАХ (БЕЗ НАСЛОЕНИЙ) ===== */
+.ant-picker-calendar-date-content {
+	padding: 4px 6px 6px 6px;
+	overflow: visible !important;
+	max-height: none !important;
+	height: auto !important;
+	flex: 1;
+	display: block;
+}
+
+/* Пустая ячейка */
+.ant-picker-calendar-date-content:empty {
+	min-height: 50px;
+}
+
+/* Блок события */
+.ant-picker-calendar-date-content > div {
+	background: #2a2218cc;
+	border-left: 3px solid #c88844;
+	border-radius: 8px;
+	padding: 6px 8px;
+	margin: 4px 0;
+	font-size: 11px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+	transition: 0.1s;
+	word-wrap: break-word;
+	white-space: normal;
+	overflow: visible;
+	position: relative;
+}
+
+.ant-picker-calendar-date-content > div:hover {
+	background: #3a2e20cc;
+	border-left-color: #e8aa60;
+	z-index: 10;
+}
+
+/* Несколько событий */
+.ant-picker-calendar-date-content > div:not(:last-child) {
+	margin-bottom: 6px;
+}
+
+/* Заголовок события */
+.ant-picker-calendar-date-content div div {
+	font-weight: 800;
+	color: #f0d890;
+	font-size: 11px;
+	margin-bottom: 4px;
+	word-break: break-word;
+}
+
+/* Список участников */
+.ant-picker-calendar-date-content ul {
+	margin: 4px 0 0 0;
+	padding-left: 16px;
+	list-style: none;
+	overflow: visible;
+}
+
+.ant-picker-calendar-date-content li {
+	color: #dccaa4;
+	font-size: 9px;
+	font-family: monospace;
+	word-break: break-word;
+	white-space: normal;
+	line-height: 1.4;
+	margin: 3px 0;
+	position: relative;
+	overflow: visible;
+}
+
+.ant-picker-calendar-date-content li::before {
+	content: '•';
+	color: #c88844;
+	position: absolute;
+	left: -12px;
+}
+
+/* Убираем скроллы везде внутри календаря */
+.ant-picker-calendar-full,
+.ant-picker-panel,
+.ant-picker-date-panel,
+.ant-picker-body,
+.ant-picker-content,
+.ant-picker-calendar-date-content {
+	overflow-y: visible !important;
+	overflow-x: visible !important;
+}
+
+/* ===== КНОПКА "ДОБАВИТЬ СОБЫТИЕ" ===== */
+.ant-row-center .ant-btn {
+	background: #3a2a1c !important;
+	border: 1px solid #8a6840 !important;
+	color: #eeddbb !important;
+	font-weight: bold;
+	padding: 8px 28px;
+	border-radius: 40px;
+	font-size: 14px;
+	letter-spacing: 1px;
+	box-shadow: 0 3px 0 #1a140e;
+	transition: 0.1s linear;
+	margin-top: 28px;
+}
+
+.ant-row-center .ant-btn:hover {
+	background: #5a4028 !important;
+	border-color: #c89850 !important;
+	color: #fff5e0 !important;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 0 #1a140e;
+}
+
+/* ===== СТРАНИЦА ЛОГИНА ===== */
+.ant-row-center.ant-row-middle.h100 {
+	min-height: 100vh;
+	background: linear-gradient(135deg, #3d3022 0%, #2a2018 50%, #1f1812 100%);
+	position: relative;
+	overflow: hidden;
+}
+
+/* Декоративный слой */
+.ant-row-center.ant-row-middle.h100::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image:
+		radial-gradient(
+			circle at 20% 40%,
+			rgba(180, 140, 80, 0.1) 0%,
+			transparent 60%
+		),
+		repeating-linear-gradient(
+			45deg,
+			rgba(140, 100, 60, 0.05) 0px,
+			rgba(140, 100, 60, 0.05) 2px,
+			transparent 2px,
+			transparent 12px
+		);
+	pointer-events: none;
+}
+
+/* Заголовок */
+.ant-row-center.ant-row-middle.h100 h1 {
+	font-size: 48px;
+	font-weight: 800;
+	color: #e8d4b0;
+	text-shadow:
+		3px 3px 0px #4a3218,
+		6px 6px 0px rgba(0, 0, 0, 0.2);
+	letter-spacing: 4px;
+	margin-bottom: 20px;
+	position: relative;
+	z-index: 1;
+	font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+/* Форма */
+.ant-form {
+	background: rgba(35, 28, 20, 0.95);
+	backdrop-filter: blur(2px);
+	padding: 32px 40px;
+	border-radius: 32px;
+	box-shadow:
+		0 20px 40px rgba(0, 0, 0, 0.3),
+		inset 0 1px 0 rgba(220, 180, 120, 0.15);
+	border: 1px solid #6e5438;
+	width: 100%;
+	max-width: 480px;
+	position: relative;
+	z-index: 2;
+	animation: journalOpen 0.4s ease-out;
+}
+
+/* Уголки формы */
+.ant-form::before,
+.ant-form::after {
+	content: '';
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	border-style: solid;
+	border-color: #b89060;
+	pointer-events: none;
+}
+
+.ant-form::before {
+	top: 16px;
+	left: 16px;
+	border-top: 2px solid #b89060;
+	border-left: 2px solid #b89060;
+}
+
+.ant-form::after {
+	bottom: 16px;
+	right: 16px;
+	border-bottom: 2px solid #b89060;
+	border-right: 2px solid #b89060;
+}
+
+/* Свечение реликвий на форме */
+.ant-form::before {
+	content: '';
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	width: 100px;
+	height: 100px;
+	background: radial-gradient(
+		circle,
+		rgba(180, 130, 60, 0.1) 0%,
+		rgba(180, 130, 60, 0) 70%
+	);
+	border-radius: 50%;
+	pointer-events: none;
+}
+
+.ant-form::after {
+	content: '';
+	position: absolute;
+	bottom: -20px;
+	right: -20px;
+	width: 100px;
+	height: 100px;
+	background: radial-gradient(
+		circle,
+		rgba(200, 140, 70, 0.15) 0%,
+		rgba(200, 140, 70, 0) 70%
+	);
+	border-radius: 50%;
+	pointer-events: none;
+}
+
+/* Лейблы */
+.ant-form-item-label label {
+	color: #e0c8a0 !important;
+	font-weight: 600;
+	font-size: 14px;
+	letter-spacing: 0.5px;
+}
+
+.ant-form-item-required::before {
+	color: #d89a4a !important;
+}
+
+/* Поля ввода */
+.ant-input,
+.ant-input-affix-wrapper {
+	background: #2a2218 !important;
+	border: 1px solid #7a5a3a !important;
+	border-radius: 16px !important;
+	padding: 8px 16px !important;
+	font-size: 14px;
+	transition: all 0.2s;
+	color: #eeddbb;
+}
+
+.ant-input::placeholder {
+	color: #7a684a;
+}
+
+.ant-input:focus,
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper-focused {
+	border-color: #c89850 !important;
+	box-shadow: 0 0 0 3px rgba(200, 140, 70, 0.2) !important;
+	background: #33281e !important;
+}
+
+.ant-input-password .ant-input {
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+/* Глазик */
+.ant-input-password-icon {
+	color: #b8946a;
+	font-size: 18px;
+}
+
+.ant-input-password-icon:hover {
+	color: #e8aa60;
+}
+
+/* Чекбокс */
+.ant-checkbox-wrapper {
+	color: #dccaa4;
+	font-weight: 500;
+}
+
+.ant-checkbox .ant-checkbox-inner {
+	background-color: #2a2218;
+	border-color: #8a6840 !important;
+	border-width: 1px;
+	border-radius: 5px;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+	background-color: #8a6840 !important;
+	border-color: #b89060 !important;
+}
+
+.ant-checkbox-checked::after {
+	border-color: #b89060 !important;
+}
+
+/* Кнопка отправки */
+.ant-btn-primary {
+	background: linear-gradient(135deg, #7a5a3a 0%, #5a4028 100%) !important;
+	border: none !important;
+	border-radius: 40px !important;
+	padding: 10px 32px !important;
+	height: auto !important;
+	font-size: 16px;
+	font-weight: bold;
+	letter-spacing: 2px;
+	color: #f5ecd8 !important;
+	box-shadow: 0 4px 0 #2a1e12;
+	transition: 0.1s linear;
+	width: 100%;
+}
+
+.ant-btn-primary:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 0 #2a1e12;
+	background: linear-gradient(135deg, #9a7850 0%, #7a5a3a 100%) !important;
+	color: #fff8ec !important;
+}
+
+.ant-btn-primary:active {
+	transform: translateY(2px);
+	box-shadow: 0 2px 0 #2a1e12;
+}
+
+/* ===== АНИМАЦИИ ===== */
+@keyframes journalOpen {
+	from {
+		opacity: 0;
+		transform: scale(0.96) translateY(15px);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1) translateY(0);
+	}
+}
+
+@keyframes relicGlow {
+	0%,
+	100% {
+		opacity: 0.4;
+	}
+	50% {
+		opacity: 0.9;
+	}
+}
+
+.ant-picker-calendar-date-today {
+	animation: relicGlow 3s infinite;
+}
+
+/* ===== СКРОЛЛ ===== */
+::-webkit-scrollbar {
+	width: 8px;
+	background: #1f1a14;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #6e5438;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #9a7850;
+}
+
+/* ===== АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ ===== */
+@media (max-width: 600px) {
+	.ant-form {
+		margin: 20px;
+		padding: 24px 20px;
+		border-radius: 24px;
+	}
+
+	.ant-row-center.ant-row-middle.h100 h1 {
+		font-size: 32px;
+	}
+
+	.ant-picker-calendar-date-value {
+		font-size: 14px;
+	}
+
+	.ant-picker-cell-inner {
+		min-height: 90px !important;
+	}
+}

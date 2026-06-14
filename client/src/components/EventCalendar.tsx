@@ -21,6 +21,11 @@ const EventCalendar: FC<EventCalendarProps> = props => {
 					<div key={index}>
 						{ev.title} <br />
 						{ev.description}
+						<ul>
+							{ev.participants.map((p: any) => {
+								return <li>{p.email}</li>
+							})}
+						</ul>
 					</div>
 				))}
 			</div>

@@ -63,7 +63,6 @@ export const getGuests = async () => {
 export const getEvents = async () => {
 	try {
 		const { data } = await $authHost.get('api/getEvents')
-		console.log(data)
 
 		return data
 	} catch (error: any) {
